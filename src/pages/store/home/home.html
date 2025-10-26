@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Home Cliente</title>
 </head>
 <body>
-  <h2>Hola desde el home</h2>
+  <h1>Bienvenido cliente</h1>
+  <button id="btnLogout">Logout</button>
+
+  <script type="module">
+    import { logout, requireRole } from '../../../utils/auth.js';
+    requireRole('cliente');
+    document.getElementById('btnLogout')?.addEventListener('click', () => logout());
+  </script>
 </body>
 </html>
