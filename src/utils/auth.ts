@@ -3,12 +3,13 @@ export interface SessionUser {
   id?: number;
   name?: string;
   email: string;
-  role: 'admin' | 'cliente';
+  rol: 'admin' | 'cliente';
 }
 
 const KEY = 'user';
 
 export function saveUser(user: SessionUser) {
+  console.log('saveUser ejecutado', user); 
   localStorage.setItem(KEY, JSON.stringify(user));
 }
 
@@ -23,27 +24,22 @@ export function isLoggedIn(): boolean {
 
 export function hasRole(role: 'admin'|'cliente'): boolean {
   const u = getUser();
-  return !!u && u.role === role;
+  return !!u && u.rol === role;
 }
 
-export function requireLogin() {
-  if (!isLoggedIn()) {
-    window.location.replace('/src/pages/auth/login/login.html');
-  }
-}
-
-export function requireRole(role: 'admin'|'cliente') {
-  requireLogin();
+export function requireLogin(): boolean {
   const u = getUser();
-  if (!u) return;
-  if (u.role !== role) {
-    if (u.role === 'admin') {
-      window.location.replace('/src/pages/admin/adminHome/adminHome.html');
-    } else {
-      window.location.replace('/src/pages/store/home/home.html');
-    }
-  }
+  return !!u;
 }
+
+export function requireRole(role: 'admin'|'cliente'): boolean {
+  const u = getUser();
+  if (!u) return false;
+  return u.rol === role;
+}
+
+
+
 
 export function logout() {
   localStorage.removeItem(KEY);

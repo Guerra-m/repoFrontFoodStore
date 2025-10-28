@@ -1,4 +1,3 @@
-// src/pages/auth/login/login.ts
 import { post } from '../../../utils/api';
 import { saveUser } from '../../../utils/auth';
 import { goToRoleHome } from '../../../utils/navigate';
@@ -14,10 +13,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const password = (document.getElementById('password') as HTMLInputElement).value;
 
     try {
-      await post('login', { mail: email, contrasena: password });
-      const role = email.trim().toLowerCase() === 'admin@food.com' ? 'admin' : 'cliente';
-      saveUser({ email, role });
-      goToRoleHome({ email, role });
+      const usuario = await post('login', { mail: email, contrasena: password });
+
+      // Tomamos el rol real del usuario
+      const rol = (usuario?.rol || 'cliente').toLowerCase() as 'admin' | 'cliente';
+
+      console.log('Guardando usuario:', { email, rol, name: usuario?.nombre });
+
+      saveUser({ email, rol, name: usuario?.nombre || '' });
+      goToRoleHome({ email, rol, name: usuario?.nombre || '' });
     } catch (err: any) {
       console.error('Error en login:', err);
       alert('Error: ' + err.message);
