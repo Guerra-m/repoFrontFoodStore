@@ -9,9 +9,34 @@
   <button id="btnLogout">Logout</button>
 
   <script type="module">
-    import { logout, requireRole } from '../../../utils/auth.js';
-    requireRole('admin');
-    document.getElementById('btnLogout')?.addEventListener('click', () => logout());
+    import { logout, getUser } from '../../../utils/auth.js';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = getUser();
+
+      // 1️⃣ Si no hay usuario, redirigir al login
+      if (!user) {
+        window.location.replace('/src/pages/auth/login/login.html');
+        return; // Detener ejecución
+      }
+
+      // 2️⃣ Si el rol no es admin, redirigir según su rol real
+      if (user.rol !== 'admin') {
+        if (user.rol === 'cliente') {
+          window.location.replace('/src/pages/store/home/home.html');
+        } else {
+          window.location.replace('/src/pages/auth/login/login.html');
+        }
+        return; // Detener ejecución
+      }
+
+      // 3️⃣ Configurar logout
+      document.getElementById('btnLogout')?.addEventListener('click', () => logout());
+
+      // 4️⃣ Todo lo demás de la página se ejecuta aquí
+      console.log('Admin logueado:', user);
+    });
   </script>
+
 </body>
 </html>
