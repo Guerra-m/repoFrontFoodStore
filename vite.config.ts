@@ -8,7 +8,12 @@ export default defineConfig({
         index: resolve(__dirname, 'index.html'),
         login: resolve(__dirname, 'src/pages/auth/login/login.html'),
         register: resolve(__dirname, 'src/pages/auth/register/register.html'),
-      }
-    }
-  }
+      },
+    },
+  },
+  server: {
+    host: true,        
+    port: 5173,       
+    strictPort: true,  
+  },
 });
