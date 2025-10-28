@@ -2,6 +2,7 @@
 export interface SessionUser {
   id?: number;
   name?: string;
+  apellido?: string;
   email: string;
   rol: 'admin' | 'cliente';
 }
