@@ -3,6 +3,8 @@ import { saveUser } from '../../../utils/auth';
 import { goToRoleHome } from '../../../utils/navigate';
 
 document.addEventListener('DOMContentLoaded', () => {
+  console.log('Login.ts cargado');
+
   const loginForm = document.getElementById('loginForm') as HTMLFormElement;
   if (!loginForm) return;
 
@@ -14,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       const usuario = await post('login', { mail: email, contrasena: password });
+      console.log('Usuario recibido del backend:', usuario);
 
       // Tomamos el rol real del usuario
       const rol = (usuario?.rol || 'cliente').toLowerCase() as 'admin' | 'cliente';
