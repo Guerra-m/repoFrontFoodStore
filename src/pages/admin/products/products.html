@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Productos | Food Store</title>
+  <link rel="stylesheet" href="/src/pages/admin/adminHome/admin.css">
+  <link rel="stylesheet" href="/src/pages/admin/categories/categorias.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">🍕 Food Store</div>
+    <nav class="topnav">
+      <a href="#">Tienda</a>
+      <a href="#">Panel Admin</a>
+      <span class="user" id="userName">Usuario</span>
+      <button id="logout-btn" class="logout-btn">Cerrar Sesión</button>
+    </nav>
+  </header>
+
+  <div class="admin-container">
+    <aside class="sidebar">
+      <h3>Administración</h3>
+      <ul class="menu">
+        <li><a href="/src/pages/admin/adminHome/adminHome.html">📊 Dashboard</a></li>
+        <li><a href="/src/pages/admin/categories/categories.html">📁 Categorías</a></li>
+        <li class="active"><a href="/src/pages/admin/products/products.html">🍔 Productos</a></li>
+        <li><a href="/src/pages/admin/orders/orders.html">📦 Pedidos</a></li>
+        <li><a href="/src/pages/store/home/home.html">🛍️ Ver Tienda</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <div class="header-table">
+        <h2>Gestión de Productos</h2>
+        <button id="btnNuevo" class="btn-nueva">+ Nuevo Producto</button>
+      </div>
+
+      <div class="tabla-container">
+        <table id="tablaProductos">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Imagen</th>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Precio</th>
+              <th>Categoría</th>
+              <th>Stock</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal Nuevo/Editar Producto -->
+  <div id="modalProducto" class="modal oculto">
+    <div class="modal-content editar">
+      <div class="modal-header">
+        <h3 id="tituloModal">Nuevo Producto</h3>
+        <button id="cerrarModal" class="cerrar-modal">✕</button>
+      </div>
+
+      <form id="formProducto">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" required>
+
+        <label for="descripcion">Descripción</label>
+        <textarea id="descripcion" rows="3"></textarea>
+
+        <label for="precio">Precio</label>
+        <input type="number" id="precio" step="0.01" min="0" required>
+
+        <label for="stock">Stock</label>
+        <input type="number" id="stock" min="0" required>
+
+        <label for="categoriaId">Categoría</label>
+        <select id="categoriaId" required>
+          <option value="">Selecciona una categoría</option>
+        </select>
+
+        <label for="imagen">URL de Imagen</label>
+        <input type="text" id="imagen" placeholder="https://...">
+
+        <label style="display:flex;align-items:center;gap:8px">
+          <input type="checkbox" id="disponible" checked>
+          Producto disponible
+        </label>
+
+        <button type="submit" class="btn-guardar-naranja">Guardar</button>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="/src/pages/admin/products/products.ts"></script>
+</body>
+</html>

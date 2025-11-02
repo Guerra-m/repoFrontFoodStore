@@ -1,36 +1,31 @@
-import { post } from '../../../utils/api';
-import { saveUser } from '../../../utils/auth';
-import { goToRoleHome } from '../../../utils/navigate';
+import { POST } from '@/utils/api';
 
-document.addEventListener('DOMContentLoaded', () => {
-  const registerForm = document.getElementById('registerForm') as HTMLFormElement;
-  if (!registerForm) return;
+const form = document.getElementById('registerForm') as HTMLFormElement;
 
-  registerForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
+form?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const nombre = (document.getElementById('nombre') as HTMLInputElement).value.trim();
+  const apellido = (document.getElementById('apellido') as HTMLInputElement).value.trim();
+  const email = (document.getElementById('email') as HTMLInputElement).value.trim();
+  const password = (document.getElementById('password') as HTMLInputElement).value;
+  const rol = (document.getElementById('rol') as HTMLSelectElement).value;
 
-    const nombre = (document.getElementById('nombre') as HTMLInputElement).value;
-    const apellido = (document.getElementById('apellido') as HTMLInputElement).value;
-    const email = (document.getElementById('email') as HTMLInputElement).value;
-    const password = (document.getElementById('password') as HTMLInputElement).value;
+  try {
+    await POST('/usuarios/registro', {
+      nombre,
+      apellido,
+      mail: email,
+      contrasena: password,
+      rol: rol,
+      celular: 0
+    });
 
-    try {
-      const usuario = await post('registro', { nombre,apellido, mail: email, contrasena: password });
-
-      // Tomamos el rol desde la respuesta o asumimos "cliente" por defecto
-      const rol = (usuario?.rol || 'cliente').toLowerCase() as 'admin' | 'cliente';
-      // 👇 Incluimos también el apellido en los datos guardados y enviados
-      const userData = {
-        email,
-        rol,
-        nombre: usuario?.nombre || nombre,
-        apellido: usuario?.apellido || apellido,
-      };
-
-      saveUser(userData);
-      goToRoleHome({ email, rol, name: usuario?.nombre || nombre });
-    } catch (err: any) {
-      alert('Error: ' + err.message);
-    }
-  });
+    alert(`¡Registro exitoso como ${rol === 'ADMIN' ? 'Administrador' : 'Cliente'}! Ahora inicia sesión.`);
+    window.location.href = '/src/pages/auth/login/login.html';
+    
+  } catch (err: any) {
+    console.error('Error en registro:', err);
+    alert('Error: ' + err.message);
+  }
 });
