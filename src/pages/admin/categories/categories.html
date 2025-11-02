@@ -1,142 +1,105 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Categorías | Food Store</title>
-    <link rel="stylesheet" href="/src/pages/admin/adminHome/admin.css">
-    <link rel="stylesheet" href="categorias.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Categorías | Food Store</title>
+  <link rel="stylesheet" href="/src/pages/admin/adminHome/admin.css">
+  <link rel="stylesheet" href="categorias.css">
 </head>
-
 <body>
+  <header class="topbar">
+    <div class="logo">🍕 Food Store</div>
+    <nav class="topnav">
+      <a href="/src/pages/store/home/home.html">Tienda</a>
+      <a href="/src/pages/admin/adminHome/adminHome.html">Panel Admin</a>
+      <span class="user">Admin Sistema</span>
+      <button id="logout-btn" class="logout-btn">Cerrar Sesión</button>
+    </nav>
+  </header>
 
-    <header class="topbar">
-        <div class="logo">🍕 Food Store</div>
-        <nav class="topnav">
-            <a href="#">Tienda</a>
-            <a href="#">Panel Admin</a>
-            <span class="user">Juan Pérez</span>
-            <button id="logout-btn" class="logout-btn">Cerrar Sesión</button>
-        </nav>
-    </header>
+  <div class="admin-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h3>Administración</h3>
+      <ul class="menu">
+        <li><a href="/src/pages/admin/adminHome/adminHome.html">📊 Dashboard</a></li>
+        <li class="active"><a href="/src/pages/admin/categories/categories.html">📁 Categorías</a></li>
+        <li><a href="/src/pages/admin/products/products.html">🍔 Productos</a></li>
+        <li><a href="/src/pages/admin/orders/orders.html">📦 Pedidos</a></li>
+        <li><a href="/src/pages/store/home/home.html">🛍️ Ver Tienda</a></li>
+      </ul>
+    </aside>
 
-    <div class="admin-container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <h3>Administración</h3>
-            <ul class="menu">
-                <li><a href="/src/pages/admin/adminHome/adminHome.html">📊 Dashboard</a></li>
-                <li class="active"><a href="categories.html">📁 Categorías</a></li>
-                <li><a href="#">🍔 Productos</a></li>
-                <li><a href="#">📦 Pedidos</a></li>
-                <li><a href="#">🛍️ Ver Tienda</a></li>
-            </ul>
-        </aside>
+    <!-- Main content -->
+    <main class="main-content">
+      <div class="header-table">
+        <h2>Gestión de Categorías</h2>
+        <button id="btnNueva" class="btn-nueva">+ Nueva Categoría</button>
+      </div>
 
-        <!-- Main content -->
-        <main class="main-content">
-            <div class="header-table">
-                <h2>Gestión de Categorías</h2>
-                <button id="btnNueva" class="btn-nueva">+ Nueva Categoría</button>
-            </div>
+      <div class="tabla-container">
+        <table id="tablaCategorias">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Imagen</th>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
 
-            <div class="tabla-container">
-                <table id="tablaCategorias">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Imagen</th>
-                            <th>Nombre</th>
-                            <th>Descripción</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- filas dinámicas con TypeScript -->
-                    </tbody>
-                </table>
-            </div>
-        </main>
-    </div>
-    <!-- Modal -->
-    <div id="modalCategoria" class="modal oculto">
-        <div class="modal-content">
-            <h3 id="tituloModal">Nueva Categoría</h3>
-            <form id="formCategoria">
-                <label>Nombre:</label>
-                <input type="text" id="nombre" required>
-    
-                <label>Descripción:</label>
-                <input type="text" id="descripcion" required>
-    
-                <label>Imagen (URL):</label>
-                <input type="text" id="imagen" placeholder="https://..." required>
-    
-                <div class="modal-buttons">
-                    <button type="submit" class="btn-guardar">Guardar</button>
-                    <button type="button" id="btnCancelar" class="btn-cancelar">Cancelar</button>
-                </div>
-            </form>
+  <!-- Modal Nueva Categoría -->
+  <div id="modalCategoria" class="modal oculto">
+    <div class="modal-content">
+      <h3 id="tituloModal">Nueva Categoría</h3>
+      <form id="formCategoria">
+        <label>Nombre:</label>
+        <input type="text" id="nombre" required>
+
+        <label>Descripción:</label>
+        <input type="text" id="descripcion" required>
+
+        <label>Imagen (URL):</label>
+        <input type="text" id="imagen" placeholder="https://..." required>
+
+        <div class="modal-buttons">
+          <button type="submit" class="btn-guardar">Guardar</button>
+          <button type="button" id="btnCancelar" class="btn-cancelar">Cancelar</button>
         </div>
+      </form>
     </div>
+  </div>
 
-    
-    <!-- Modal Editar Categoría -->
-    <div id="modalEditarCategoria" class="modal oculto">
-        <div class="modal-content editar">
-            <div class="modal-header">
-                <h3>Editar Categoría</h3>
-                <button id="cerrarEditar" class="cerrar-modal">✕</button>
-            </div>
-    
-            <form id="formEditarCategoria">
-                <label for="editarNombre">Nombre</label>
-                <input type="text" id="editarNombre" required>
-    
-                <label for="editarDescripcion">Descripción</label>
-                <textarea id="editarDescripcion" rows="3" required></textarea>
-    
-                <label for="editarImagen">URL de Imagen</label>
-                <input type="text" id="editarImagen" placeholder="https://..." required>
-    
-                <button type="submit" class="btn-guardar-naranja">Guardar</button>
-            </form>
-        </div>
+  <!-- Modal Editar Categoría -->
+  <div id="modalEditarCategoria" class="modal oculto">
+    <div class="modal-content editar">
+      <div class="modal-header">
+        <h3>Editar Categoría</h3>
+        <button id="cerrarEditar" class="cerrar-modal">✕</button>
+      </div>
+
+      <form id="formEditarCategoria">
+        <label for="editarNombre">Nombre</label>
+        <input type="text" id="editarNombre" required>
+
+        <label for="editarDescripcion">Descripción</label>
+        <textarea id="editarDescripcion" rows="3" required></textarea>
+
+        <label for="editarImagen">URL de Imagen</label>
+        <input type="text" id="editarImagen" placeholder="https://..." required>
+
+        <button type="submit" class="btn-guardar-naranja">Guardar</button>
+      </form>
     </div>
+  </div>
 
-
-
-    <script type="module" src="categories.ts"></script>
-    <script type="module">
-        import { logout, getUser } from '../../../utils/auth.js';
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const user = getUser();
-
-            // 1️⃣ Si no hay usuario, redirigir al login
-            if (!user) {
-                window.location.replace('/src/pages/auth/login/login.html');
-                return; // Detener ejecución
-            }
-
-            // 2️⃣ Si el rol no es admin, redirigir según su rol real
-            if (user.rol !== 'admin') {
-                if (user.rol === 'cliente') {
-                    window.location.replace('/src/pages/store/home/home.html');
-                } else {
-                    window.location.replace('/src/pages/auth/login/login.html');
-                }
-                return; // Detener ejecución
-            }
-
-            // 3️⃣ Configurar logout
-            document.getElementById('logout-btn')?.addEventListener('click', () => logout());
-
-            // 4️⃣ Todo lo demás de la página se ejecuta aquí
-            console.log('Admin logueado:', user);
-        });
-    </script>
+  <script type="module" src="categories.ts"></script>
 </body>
-
 </html>

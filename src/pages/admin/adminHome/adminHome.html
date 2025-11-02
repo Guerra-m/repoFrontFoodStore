@@ -10,9 +10,9 @@
   <header class="topbar">
     <div class="logo">🍕 Food Store</div>
     <nav class="topnav">
-      <a href="#">Tienda</a>
-      <a href="#">Panel Admin</a>
-      <span class="user">Juan Pérez</span>
+      <a href="/src/pages/store/home/home.html">Tienda</a>
+      <a href="/src/pages/admin/adminHome/adminHome.html">Panel Admin</a>
+      <span class="user" id="userName">Admin</span>
       <button id="logout-btn" class="logout-btn">Cerrar Sesión</button>
     </nav>
   </header>
@@ -22,11 +22,11 @@
     <aside class="sidebar">
       <h3>Administración</h3>
       <ul class="menu">
-        <li class="active"><a href="#">📊 Dashboard</a></li>
+        <li class="active"><a href="/src/pages/admin/adminHome/adminHome.html">📊 Dashboard</a></li>
         <li><a href="/src/pages/admin/categories/categories.html">📁 Categorías</a></li>
-        <li><a href="#">🍔 Productos</a></li>
-        <li><a href="#">📦 Pedidos</a></li>
-        <li><a href="#">🛍️ Ver Tienda</a></li>
+        <li><a href="/src/pages/admin/products/products.html">🍔 Productos</a></li>
+        <li><a href="/src/pages/admin/orders/orders.html">📦 Pedidos</a></li>
+        <li><a href="/src/pages/store/home/home.html">🛍️ Ver Tienda</a></li>
       </ul>
     </aside>
   
@@ -37,65 +37,36 @@
       <div class="cards-container">
         <div class="card card-categorias">
           <h3>📁 Categorías</h3>
-          <p class="count">0</p>
-          <button>Gestionar</button>
+          <p class="count" id="cCategorias">0</p>
+          <button onclick="window.location.href='/src/pages/admin/categories/categories.html'">Gestionar</button>
         </div>
   
         <div class="card card-productos">
           <h3>🍔 Productos</h3>
-          <p class="count">0</p>
-          <button>Gestionar</button>
+          <p class="count" id="cProductos">0</p>
+          <button onclick="window.location.href='/src/pages/admin/products/products.html'">Gestionar</button>
         </div>
   
         <div class="card card-pedidos">
           <h3>📦 Pedidos</h3>
-          <p class="count">0</p>
-          <button>Gestionar</button>
+          <p class="count" id="cPedidos">0</p>
+          <button onclick="window.location.href='/src/pages/admin/orders/orders.html'">Gestionar</button>
         </div>
   
         <div class="card card-disponibles">
           <h3>✅ Disponibles</h3>
-          <p class="count">0</p>
+          <p class="count" id="cDisponibles">0</p>
           <span class="subtext">Productos activos</span>
         </div>
       </div>
   
       <div class="summary">
         <h3>📊 Resumen Rápido</h3>
-        <p>Cargando estadísticas...</p>
+        <p id="resumenTexto">Cargando estadísticas...</p>
       </div>
     </main>
   </div>
 
-  <script type="module">
-    import { logout, getUser } from '../../../utils/auth.js';
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const user = getUser();
-
-      // 1️⃣ Si no hay usuario, redirigir al login
-      if (!user) {
-        window.location.replace('/src/pages/auth/login/login.html');
-        return; // Detener ejecución
-      }
-
-      // 2️⃣ Si el rol no es admin, redirigir según su rol real
-      if (user.rol !== 'admin') {
-        if (user.rol === 'cliente') {
-          window.location.replace('/src/pages/store/home/home.html');
-        } else {
-          window.location.replace('/src/pages/auth/login/login.html');
-        }
-        return; // Detener ejecución
-      }
-
-      // 3️⃣ Configurar logout
-      document.getElementById('logout-btn')?.addEventListener('click', () => logout());
-
-      // 4️⃣ Todo lo demás de la página se ejecuta aquí
-      console.log('Admin logueado:', user);
-    });
-  </script>
-
+  <script type="module" src="/src/pages/admin/adminHome/adminHome.ts"></script>
 </body>
 </html>

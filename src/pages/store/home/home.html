@@ -2,16 +2,39 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Home Cliente</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tienda - Food Store</title>
+  <link rel="stylesheet" href="home.css">
 </head>
 <body>
-  <h1>Bienvenido cliente</h1>
-  <button id="btnLogout">Logout</button>
+  <header class="topbar">
+    <div class="logo">🍕 Food Store</div>
+    <nav class="topnav">
+      <a href="/src/pages/store/home/home.html">Inicio</a>
+      <a href="/src/pages/client/orders/orders.html">Mis Pedidos</a>
+      <a href="/src/pages/store/cart/cart.html" class="cart-link">
+        🛒 Carrito <span id="cart-count" class="cart-badge">0</span>
+      </a>
+      <span class="user">Usuario</span>
+      <button id="logout-btn" class="logout-btn">Cerrar Sesión</button>
+    </nav>
+  </header>
 
-  <script type="module">
-    import { logout, requireRole } from '../../../utils/auth.js';
-    requireRole('cliente');
-    document.getElementById('btnLogout')?.addEventListener('click', () => logout());
-  </script>
+  <main class="home-container">
+    <div class="welcome-section">
+      <h1>Bienvenido a Food Store</h1>
+      <p id="welcomeMsg" class="welcome-msg">Cargando...</p>
+    </div>
+
+    <div id="categoriesContainer"></div>
+    
+    <div id="emptyState" class="empty-state" style="display:none;">
+      <div class="empty-state-icon">🍽️</div>
+      <h3>No hay categorías disponibles</h3>
+      <p>Parece que aún no hay productos en la tienda.</p>
+    </div>
+  </main>
+
+  <script type="module" src="home.ts"></script>
 </body>
 </html>
