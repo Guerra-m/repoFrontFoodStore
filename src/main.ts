@@ -1,2 +1,2 @@
-var nombre:string = "pepe";
-console.log(nombre)
+import './pages/auth/login/login.ts';
+import './pages/auth/register/register.ts';
