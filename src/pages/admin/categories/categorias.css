@@ -69,7 +69,7 @@ td img {
     cursor: pointer;
 }
 
-/* === MODAL === */
+/* MODAL  */
 .modal {
     position: fixed;
     top: 0;
@@ -145,7 +145,7 @@ td img {
     cursor: pointer;
 }
 
-/* === MODAL EDITAR === */
+/* MODAL EDITAR */
 .modal.editar {
     display: flex;
     justify-content: center;

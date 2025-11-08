@@ -1,43 +1,39 @@
-    <nav class="topnav">
-      <a href="/src/pages/store/home/home.html">Inicio</a>
-      <a href="/src/pages/client/orders/orders.html">Mis Pedidos</a>
-      <a href="/src/pages/store/cart/cart.html" class="active">🛒 Carrito</a>
-      <span class="user">Usuario</span>
-      <button id="logout-btn" class="logout-btn">Cerrar Sesión</button>
-    </nav>
-  </header>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito - Food Store</title>
+  <link rel="stylesheet" href="/src/pages/admin/adminHome/admin.css">
+  <link rel="stylesheet" href="cart.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="logo" onclick="window.location.href='/src/pages/store/home/home.html'" style="cursor: pointer;">
+    🍕 Food Store
+  </div>
+  <nav class="topnav">
+    <a href="/src/pages/store/home/home.html">Inicio</a>
+    <a href="/src/pages/client/orders/orders.html">Mis Pedidos</a>
+    <a href="/src/pages/store/cart/cart.html" style="display:flex;align-items:center;gap:0.5rem;">
+      🛒 Carrito
+      <span id="cartBadge" style="background:#ff6b35;color:white;border-radius:50%;width:24px;height:24px;display:none;align-items:center;justify-content:center;font-size:12px;font-weight:bold;"></span>
+    </a>
+    <span class="user" id="userName">Cliente</span>
+    <button id="logout-btn" class="logout-btn">Cerrar Sesión</button>
+  </nav>
+</header>
 
-  <main class="cart-container">
-    <h1>Mi Carrito de Compras</h1>
-
-    <div class="cart-content">
-      <div class="cart-items" id="cartItems">
-        <!-- Items se cargan dinámicamente -->
-      </div>
-
-      <div class="cart-summary">
-        <h2>Resumen del Pedido</h2>
-        <div class="summary-row">
-          <span>Subtotal:</span>
-          <span id="subtotal">$0.00</span>
-        </div>
-        <div class="summary-row">
-          <span>Envío:</span>
-          <span>$0.00</span>
-        </div>
-        <div class="summary-row total">
-          <span>Total:</span>
-          <span id="total">$0.00</span>
-        </div>
-        <button id="btnCheckout" class="btn-checkout">
-          Realizar Pedido
-        </button>
-        <a href="/src/pages/store/home/home.html" class="btn-continue">
-          Seguir Comprando
-        </a>
-      </div>
+  <div class="cart-container">
+    <div class="cart-header">
+      <h1>🛒 Mi Carrito de Compras</h1>
     </div>
 
-    <div id="emptyCart" class="empty-cart" style="display: none;">
-      <div class="empty-icon">🛒</div>
-      <h2>Tu carrito está vacío</h2>
+    <div id="cartContent">
+      <!-- Se carga dinámicamente -->
+    </div>
+  </div>
+
+  <script type="module" src="/src/pages/store/cart/cart.ts"></script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 :root {
-    --primary: #667eea;
-    --secondary: #764ba2;
+    --primary: #ff6b35;
+    --secondary: #f7931e;
     --dark: #2d3436;
     --light: #f5f6fa;
     --gray: #dfe6e9;
@@ -90,7 +90,7 @@ input,
 input:focus,
 .select-rol:focus {
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
 }
 
 .select-rol {
@@ -118,7 +118,7 @@ input:focus,
 
 .btn-submit:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
 }
 
 .btn-submit:active {
