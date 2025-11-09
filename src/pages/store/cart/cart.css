@@ -1,3 +1,107 @@
+/* ======== NAVBAR ======== */
+.topbar {
+  background: linear-gradient(135deg, #ff6b35, #f7931e);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+.topnav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.topnav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.topnav a:hover {
+  opacity: 0.8;
+  transform: translateY(-2px);
+}
+
+/* ======== CARRITO ======== */
+.cart-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+#cartBadge {
+  background: white;
+  color: #ff6b35;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: none; /* Se muestra dinámicamente desde JS */
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: bold;
+  position: absolute;
+  top: -8px;
+  right: -15px;
+}
+
+/* ======== USUARIO Y BOTÓN ======== */
+.user {
+  background: rgba(255,255,255,0.2);
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.logout-btn {
+  background: white;
+  color: #ff6b35;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+  background: #ffe3d3;
+}
+
+/* ======== RESPONSIVE ======== */
+@media (max-width: 768px) {
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .topnav {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+}
+
 body {
   background: #f5f6fa;
   margin: 0;
