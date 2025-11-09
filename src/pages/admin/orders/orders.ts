@@ -1,3 +1,4 @@
+// src/pages/admin/orders/orders.ts
 import { GET, PUT } from '@/utils/api';
 import { logout, requireAdmin, getUser } from '@/utils/auth';
 import type { IPedido } from '@/types/IOrders';
@@ -14,6 +15,7 @@ document.getElementById('logout-btn')?.addEventListener('click', () => logout())
 
 let currentFilter = 'TODOS';
 
+// Normaliza la respuesta del backend
 function norm<T>(res: any): T[] {
   if (Array.isArray(res)) return res;
   if (res?.content) return res.content;
@@ -21,26 +23,33 @@ function norm<T>(res: any): T[] {
   return [];
 }
 
+// Traducción de estado al texto mostrado
 function getStatusText(estado: string): string {
   const estados: Record<string, string> = {
     'PENDIENTE': '⏳ Pendiente',
-    'APROBADO': '✅ Aprobado',
-    'RECHAZADO': '❌ Rechazado',
-    'ENTREGADO': '🚚 Entregado'
+    'CONFIRMADO': '✅ Confirmado',
+    'CANCELADO': '❌ Cancelado',
+    'TERMINADO': '🚚 Terminado'
   };
   return estados[estado] || estado;
 }
 
 async function loadOrders() {
   const container = document.getElementById('ordersContent')!;
-  
   container.innerHTML = '<div class="loading">⏳ Cargando pedidos...</div>';
-  
+
   try {
     const res: any = await GET('/pedidos');
+    console.log('Respuesta completa del backend:', res);
+
     let pedidos = norm<IPedido>(res);
 
-    console.log('Pedidos cargados:', pedidos);
+    if (!Array.isArray(pedidos)) {
+      console.error('⚠️ Error: la respuesta no es un array. Valor:', pedidos);
+      pedidos = [];
+    }
+
+    console.log('Pedidos normalizados:', pedidos);
 
     // Filtrar según el estado seleccionado
     if (currentFilter !== 'TODOS') {
@@ -58,74 +67,82 @@ async function loadOrders() {
       return;
     }
 
-    // Ordenar por fecha descendente (más reciente primero)
+    // Ordenar por fecha descendente
     pedidos.sort((a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime());
 
-    container.innerHTML = pedidos.map(pedido => `
-      <div class="order-card">
-        <div class="order-header">
-          <div class="order-info">
-            <h3>Pedido #${pedido.id}</h3>
-            <p class="order-client">👤 Cliente: ${pedido.usuarioNombre || 'Usuario #' + pedido.usuarioId}</p>
-            <p class="order-date">📅 ${new Date(pedido.fecha).toLocaleDateString('es-ES', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-              hour: '2-digit',
-              minute: '2-digit'
-            })}</p>
-          </div>
-          <span class="order-status status-${pedido.estado}">
-            ${getStatusText(pedido.estado)}
-          </span>
-          <div class="order-actions">
-            <button 
-              class="btn-approve" 
-              onclick="updateOrderStatus(${pedido.id}, 'APROBADO')"
-              ${pedido.estado !== 'PENDIENTE' ? 'disabled' : ''}
-            >
-              ✅ Aprobar
-            </button>
-            <button 
-              class="btn-reject" 
-              onclick="updateOrderStatus(${pedido.id}, 'RECHAZADO')"
-              ${pedido.estado !== 'PENDIENTE' ? 'disabled' : ''}
-            >
-              ❌ Rechazar
-            </button>
-            <button 
-              class="btn-deliver" 
-              onclick="updateOrderStatus(${pedido.id}, 'ENTREGADO')"
-              ${pedido.estado !== 'APROBADO' ? 'disabled' : ''}
-            >
-              🚚 Entregar
-            </button>
-          </div>
-        </div>
+    // 🔹 Renderizar pedidos
+    container.innerHTML = pedidos.map(pedido => {
+      if (!pedido) return ''; // Evita errores si el pedido es undefined
+      const detalles = Array.isArray(pedido.detalles) ? pedido.detalles : []; // Siempre array
 
-        <div class="order-items">
-          <div class="order-items-header">
-            <span>Producto</span>
-            <span style="text-align:right;">Cantidad</span>
-            <span style="text-align:right;">Precio Unit.</span>
-            <span style="text-align:right;">Subtotal</span>
-          </div>
-          ${pedido.items.map(item => `
-            <div class="order-item">
-              <span class="item-name">${item.productoNombre}</span>
-              <span class="item-qty">${item.cantidad}</span>
-              <span class="item-price">$${item.precio.toFixed(2)}</span>
-              <span class="item-subtotal">$${item.subtotal.toFixed(2)}</span>
+      return `
+        <div class="order-card">
+          <div class="order-header">
+            <div class="order-info">
+              <h3>Pedido #${pedido.id}</h3>
+              <p class="order-client">👤 Cliente: ${pedido.usuarioNombre || 'Usuario #' + pedido.usuarioId}</p>
+              <p class="order-date">📅 ${new Date(pedido.fecha).toLocaleDateString('es-ES', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+              })}</p>
             </div>
-          `).join('')}
-        </div>
+            <span class="order-status status-${pedido.estado}">
+              ${getStatusText(pedido.estado)}
+            </span>
 
-        <div class="order-total">
-          <span class="total-label">Total:</span>
-          <span class="total-amount">$${pedido.total.toFixed(2)}</span>
+            <!-- 🔹 BOTONES ACTUALIZADOS -->
+            <div class="order-actions">
+              <button 
+                class="btn-approve" 
+                onclick="updateOrderStatus(${pedido.id}, 'CONFIRMADO')"
+                ${pedido.estado !== 'PENDIENTE' ? 'disabled' : ''}
+              >
+                ✅ Confirmar
+              </button>
+              <button 
+                class="btn-reject" 
+                onclick="updateOrderStatus(${pedido.id}, 'CANCELADO')"
+                ${pedido.estado !== 'PENDIENTE' ? 'disabled' : ''}
+              >
+                ❌ Cancelar
+              </button>
+              <button 
+                class="btn-deliver" 
+                onclick="updateOrderStatus(${pedido.id}, 'TERMINADO')"
+                ${pedido.estado !== 'CONFIRMADO' ? 'disabled' : ''}
+              >
+                🚚 Terminar
+              </button>
+            </div>
+          </div>
+
+          <div class="order-items">
+            <div class="order-items-header">
+              <span>Producto</span>
+              <span style="text-align:right;">Cantidad</span>
+              <span style="text-align:right;">Precio Unit.</span>
+              <span style="text-align:right;">Subtotal</span>
+            </div>
+            ${detalles.map(item => `
+              <div class="order-item">
+                <span class="item-name">${item.productoNombre}</span>
+                <span class="item-qty">${item.cantidad}</span>
+                <span class="item-price">$${item.precio.toFixed(2)}</span>
+                <span class="item-subtotal">$${item.subtotal.toFixed(2)}</span>
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="order-total">
+            <span class="total-label">Total:</span>
+            <span class="total-amount">$${pedido.total.toFixed(2)}</span>
+          </div>
         </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
 
   } catch (error) {
     console.error('Error al cargar pedidos:', error);
@@ -139,11 +156,12 @@ async function loadOrders() {
   }
 }
 
+// 🔹 FUNCIÓN GLOBAL PARA ACTUALIZAR ESTADO
 (window as any).updateOrderStatus = async (pedidoId: number, nuevoEstado: string) => {
   const confirmMessages: Record<string, string> = {
-    'APROBADO': '¿Aprobar este pedido?',
-    'RECHAZADO': '¿Rechazar este pedido?',
-    'ENTREGADO': '¿Marcar como entregado?'
+    'CONFIRMADO': '¿Confirmar este pedido?',
+    'CANCELADO': '¿Cancelar este pedido?',
+    'TERMINADO': '¿Marcar como terminado?'
   };
 
   if (confirm(confirmMessages[nuevoEstado] || '¿Continuar?')) {
@@ -158,7 +176,7 @@ async function loadOrders() {
   }
 };
 
-// Eventos de filtros
+// 🔹 Filtros
 document.querySelectorAll('.filter-btn').forEach(btn => {
   btn.addEventListener('click', (e) => {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));

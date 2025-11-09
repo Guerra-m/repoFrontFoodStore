@@ -1,14 +1,16 @@
+//src/types/IOrders.ts
 export interface IPedido {
   id?: number;
   usuarioId: number;
   usuarioNombre?: string;
   fecha: string;
-  estado: 'PENDIENTE' | 'APROBADO' | 'RECHAZADO' | 'ENTREGADO';
+  estado: 'PENDIENTE' | 'CONFIRMADO' | 'CANCELADO' | 'TERMINADO';
   total: number;
-  items: IPedidoItem[];
+  detalles: IPedidoItem[];
 }
 
-export interface IPedidoItem {
+
+export interface IPedidoDetalle {
   id?: number;
   productoId: number;
   productoNombre: string;
