@@ -9,37 +9,16 @@
     
   </header>
 
-  <main class="cart-container">
-    <h1>Mi Carrito de Compras</h1>
-
-    <div class="cart-content">
-      <div class="cart-items" id="cartItems">
-        <!-- Items se cargan dinámicamente -->
-      </div>
-
-      <div class="cart-summary">
-        <h2>Resumen del Pedido</h2>
-        <div class="summary-row">
-          <span>Subtotal:</span>
-          <span id="subtotal">$0.00</span>
-        </div>
-        <div class="summary-row">
-          <span>Envío:</span>
-          <span>$0.00</span>
-        </div>
-        <div class="summary-row total">
-          <span>Total:</span>
-          <span id="total">$0.00</span>
-        </div>
-        <button id="btnCheckout" class="btn-checkout">
-          Realizar Pedido
-        </button>
-        <a href="/src/pages/store/home/home.html" class="btn-continue">
-          Seguir Comprando
-        </a>
-      </div>
+  <div class="cart-container">
+    <div class="cart-header">
+      <h1>🛒 Mi Carrito de Compras</h1>
     </div>
 
-    <div id="emptyCart" class="empty-cart" style="display: none;">
-      <div class="empty-icon">🛒</div>
-      <h2>Tu carrito está vacío</h2>
+    <div id="cartContent">
+      <!-- Se carga dinámicamente -->
+    </div>
+  </div>
+
+  <script type="module" src="/src/pages/store/cart/cart.ts"></script>
+</body>
+</html>

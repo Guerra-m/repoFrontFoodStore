@@ -1,0 +1,178 @@
+.orders-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+}
+
+.orders-header {
+  margin-bottom: 2rem;
+}
+
+.orders-header h1 {
+  color: #2d3436;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: #636e72;
+  font-size: 1rem;
+}
+
+.order-card {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.order-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.order-info h3 {
+  margin: 0 0 0.5rem 0;
+  color: #2d3436;
+  font-size: 1.2rem;
+}
+
+.order-date {
+  color: #636e72;
+  font-size: 0.9rem;
+}
+
+.order-status {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.status-PENDIENTE {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-APROBADO {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.status-RECHAZADO {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.status-ENTREGADO {
+  background: #d4edda;
+  color: #155724;
+}
+
+.order-items {
+  margin-bottom: 1rem;
+}
+
+.order-item {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 1rem;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.order-item:last-child {
+  border-bottom: none;
+}
+
+.item-name {
+  font-weight: 600;
+  color: #2d3436;
+}
+
+.item-qty, .item-price, .item-subtotal {
+  text-align: right;
+  color: #636e72;
+}
+
+.order-total {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 2px solid #f0f0f0;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.total-label {
+  color: #2d3436;
+}
+
+.total-amount {
+  color: #ff6b35;
+}
+
+.empty-orders {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.empty-orders h2 {
+  color: #2d3436;
+  margin-bottom: 1rem;
+}
+
+.empty-orders p {
+  color: #636e72;
+  margin-bottom: 2rem;
+}
+
+.btn-shop {
+  background: linear-gradient(135deg, #ff6b35, #f7931e);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.btn-shop:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+@media (max-width: 768px) {
+  .order-item {
+    grid-template-columns: 1fr;
+    text-align: left !important;
+  }
+  
+  .item-qty, .item-price, .item-subtotal {
+    text-align: left;
+  }
+}

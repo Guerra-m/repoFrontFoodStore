@@ -1,11 +1,11 @@
 export interface IProduct {
   id: number;
   nombre: string;
-  descripcion?: string;
+  descripcion: string;
   precio: number;
-  stock: number;
-  imagen?: string;
+  stock: number;  // ← AGREGAR
+  disponible: boolean;
+  imagen: string;
   categoriaId: number;
   categoriaNombre?: string;
-  disponible?: boolean;
 }

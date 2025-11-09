@@ -8,15 +8,17 @@
   <link rel="stylesheet" href="/src/pages/admin/categories/categorias.css">
 </head>
 <body>
-  <header class="topbar">
-    <div class="logo">🍕 Food Store</div>
-    <nav class="topnav">
-      <a href="#">Tienda</a>
-      <a href="#">Panel Admin</a>
-      <span class="user" id="userName">Usuario</span>
-      <button id="logout-btn" class="logout-btn">Cerrar Sesión</button>
-    </nav>
-  </header>
+ <header class="topbar">
+  <div class="logo" onclick="window.location.href='/src/pages/store/home/home.html'" style="cursor: pointer;">
+    🍕 Food Store
+  </div>
+  <nav class="topnav">
+    <a href="/src/pages/store/home/home.html">🛍️ Tienda</a>
+    <a href="/src/pages/admin/adminHome/adminHome.html">⚙️ Panel Admin</a>
+    <span class="user" id="userName">Admin</span>
+    <button id="logout-btn" class="logout-btn">Cerrar Sesión</button>
+  </nav>
+</header>
 
   <div class="admin-container">
     <aside class="sidebar">
