@@ -15,7 +15,7 @@
     font-family: "Poppins", sans-serif;
 }
 
-/* === HEADER SUPERIOR === */
+/* HEADER SUPERIOR  */
 .topbar {
     background: white;
     border-bottom: 1px solid var(--gray);
@@ -57,13 +57,13 @@
     background: #b2bec3;
 }
 
-/* === CONTENEDOR GENERAL === */
+/* CONTENEDOR GENERAL */
 .admin-container {
     display: flex;
     height: calc(100vh - 60px);
 }
 
-/* === SIDEBAR === */
+/*  SIDEBAR */
 .sidebar {
     width: 230px;
     background: var(--light);
@@ -99,7 +99,7 @@
     color: white;
 }
 
-/* === CONTENIDO PRINCIPAL === */
+/*  CONTENIDO PRINCIPAL */
 .main-content {
     flex: 1;
     background: #f9fafc;
@@ -111,7 +111,7 @@
     color: var(--dark);
 }
 
-/* === TARJETAS === */
+/* TARJETAS */
 .cards-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -183,7 +183,7 @@
     opacity: 0.9;
 }
 
-/* === RESUMEN === */
+/* RESUMEN */
 .summary {
     background: white;
     padding: 1rem;
