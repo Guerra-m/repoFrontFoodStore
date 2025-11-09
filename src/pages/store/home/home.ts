@@ -138,10 +138,13 @@ function renderProducts(productos: IProduct[]): string {
 
 function attachProductClickListeners() {
   document.querySelectorAll('.product-card').forEach(card => {
-    card.addEventListener('click', (e) => {
-      if ((card as HTMLElement).classList.contains('disabled')) return;
+    card.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
       
-      const productId = Number((card as HTMLElement).dataset.productId);
+      if ((this as HTMLElement).classList.contains('disabled')) return;
+      
+      const productId = Number((this as HTMLElement).dataset.productId);
       const product = allProducts.find(p => p.id === productId);
       
       if (product) {
@@ -162,7 +165,7 @@ function openProductModal(product: IProduct) {
   const modalHTML = `
     <div class="product-modal-overlay" id="productModal">
       <div class="product-modal">
-        <button class="modal-close" onclick="closeProductModal()">✕</button>
+        <button class="modal-close" id="modalCloseBtn">✕</button>
         
         <div class="modal-content">
           <div class="modal-image">
@@ -178,29 +181,37 @@ function openProductModal(product: IProduct) {
             
             <div class="modal-stock-info">
               <span class="modal-price">$${product.precio.toFixed(2)}</span>
-              <span class="modal-stock">Stock disponible: ${maxQuantity}</span>
+              <span class="modal-stock">Stock total: ${product.stock} | Disponible para agregar: ${maxQuantity}</span>
               ${currentQtyInCart > 0 ? `<span class="modal-in-cart">Ya tienes ${currentQtyInCart} en el carrito</span>` : ''}
             </div>
 
-            <div class="modal-quantity">
-              <label>Cantidad:</label>
-              <div class="quantity-controls">
-                <button class="qty-btn" id="decreaseQty">-</button>
-                <input type="number" id="modalQtyInput" value="1" min="1" max="${maxQuantity}" readonly>
-                <button class="qty-btn" id="increaseQty">+</button>
+            ${maxQuantity > 0 ? `
+              <div class="modal-quantity">
+                <label>Cantidad a agregar:</label>
+                <div class="quantity-controls">
+                  <button class="qty-btn" id="decreaseQty">-</button>
+                  <input type="number" id="modalQtyInput" value="1" min="1" max="${maxQuantity}" readonly>
+                  <button class="qty-btn" id="increaseQty">+</button>
+                </div>
               </div>
-            </div>
 
-            <div class="modal-total">
-              <span>Total:</span>
-              <span id="modalTotal" class="modal-total-price">$${product.precio.toFixed(2)}</span>
-            </div>
+              <div class="modal-total">
+                <span>Total:</span>
+                <span id="modalTotal" class="modal-total-price">$${product.precio.toFixed(2)}</span>
+              </div>
 
-            <div class="modal-actions">
-              <button class="btn-add-to-cart" id="addToCartBtn" ${maxQuantity === 0 ? 'disabled' : ''}>
-                ${maxQuantity === 0 ? 'Sin stock disponible' : 'Agregar al carrito'}
-              </button>
-            </div>
+              <div class="modal-actions">
+                <button class="btn-add-to-cart" id="addToCartBtn">
+                  Agregar al carrito
+                </button>
+              </div>
+            ` : `
+              <div class="modal-actions">
+                <div style="text-align:center;padding:1rem;color:#d63031;font-weight:600;">
+                  ❌ No hay stock disponible para agregar más de este producto
+                </div>
+              </div>
+            `}
           </div>
         </div>
       </div>
@@ -209,75 +220,93 @@ function openProductModal(product: IProduct) {
 
   document.body.insertAdjacentHTML('beforeend', modalHTML);
 
-  // Event listeners del modal
-  const qtyInput = document.getElementById('modalQtyInput') as HTMLInputElement;
-  const totalDisplay = document.getElementById('modalTotal')!;
-  const decreaseBtn = document.getElementById('decreaseQty')!;
-  const increaseBtn = document.getElementById('increaseQty')!;
-  const addToCartBtn = document.getElementById('addToCartBtn')!;
-
-  function updateTotal() {
-    const total = product.precio * modalQuantity;
-    totalDisplay.textContent = `$${total.toFixed(2)}`;
-    qtyInput.value = String(modalQuantity);
+  // Botón cerrar modal
+  const closeBtn = document.getElementById('modalCloseBtn');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeProductModal();
+    });
   }
 
-  decreaseBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (modalQuantity > 1) {
-      modalQuantity--;
-      updateTotal();
-    }
-  });
+  if (maxQuantity > 0) {
+    // Event listeners del modal
+    const qtyInput = document.getElementById('modalQtyInput') as HTMLInputElement;
+    const totalDisplay = document.getElementById('modalTotal')!;
+    const decreaseBtn = document.getElementById('decreaseQty')!;
+    const increaseBtn = document.getElementById('increaseQty')!;
+    const addToCartBtn = document.getElementById('addToCartBtn')!;
 
-  increaseBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (modalQuantity < maxQuantity) {
-      modalQuantity++;
-      updateTotal();
-    } else {
-      alert(`Stock máximo disponible: ${maxQuantity}`);
-    }
-  });
-
-  addToCartBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    
-    if (maxQuantity === 0) {
-      alert('No hay stock disponible');
-      return;
+    function updateTotal() {
+      const total = product.precio * modalQuantity;
+      totalDisplay.textContent = `$${total.toFixed(2)}`;
+      qtyInput.value = String(modalQuantity);
     }
 
-    // Agregar o actualizar cantidad en el carrito
-    if (inCart) {
-      updateQuantity(product.id, inCart.qty + modalQuantity);
-    } else {
-      addToCart({
-        productId: product.id,
-        nombre: product.nombre,
-        precio: product.precio,
-        imagen: product.imagen,
-        qty: modalQuantity
-      });
-    }
-
-    updateCartBadge();
-    closeProductModal();
-    
-    // Re-renderizar categorías para actualizar badges
-    const categorias = [...new Set(allProducts.map(p => p.categoriaId))];
-    categorias.forEach(catId => {
-      const productosCategoria = allProducts.filter(p => p.categoriaId === catId && p.disponible);
-      const productsGrid = document.getElementById(`products-${catId}`);
-      if (productsGrid && productsGrid.classList.contains('active')) {
-        productsGrid.innerHTML = renderProducts(productosCategoria);
-        attachProductClickListeners();
+    decreaseBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (modalQuantity > 1) {
+        modalQuantity--;
+        updateTotal();
       }
     });
 
-    // Mostrar feedback
-    alert(`✅ ${modalQuantity} ${product.nombre} agregado(s) al carrito`);
-  });
+    increaseBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (modalQuantity < maxQuantity) {
+        modalQuantity++;
+        updateTotal();
+      } else {
+        alert(`Stock máximo disponible para agregar: ${maxQuantity}`);
+      }
+    });
+
+    addToCartBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      
+      // Agregar o actualizar cantidad en el carrito
+      if (inCart) {
+        updateQuantity(product.id, inCart.qty + modalQuantity);
+      } else {
+        addToCart({
+          productId: product.id,
+          nombre: product.nombre,
+          precio: product.precio,
+          imagen: product.imagen,
+          qty: modalQuantity
+        });
+      }
+
+      updateCartBadge();
+      closeProductModal();
+      
+      // Actualizar SOLO los badges, no re-renderizar todo
+      updateAllProductBadges();
+
+      // Mostrar feedback
+      const message = document.createElement('div');
+      message.className = 'toast-message';
+      message.textContent = `✅ ${modalQuantity} ${product.nombre} agregado(s) al carrito`;
+      message.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: #00b894;
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        z-index: 10000;
+        animation: slideIn 0.3s ease;
+      `;
+      document.body.appendChild(message);
+      
+      setTimeout(() => {
+        message.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => message.remove(), 300);
+      }, 2000);
+    });
+  }
 
   // Cerrar modal al hacer click en el overlay
   document.getElementById('productModal')?.addEventListener('click', (e) => {
@@ -287,12 +316,64 @@ function openProductModal(product: IProduct) {
   });
 }
 
-(window as any).closeProductModal = function() {
+function closeProductModal() {
   const modal = document.getElementById('productModal');
   if (modal) {
     modal.remove();
   }
-};
+}
+
+function updateAllProductBadges() {
+  const cart = getCart();
+  
+  document.querySelectorAll('.product-card').forEach(card => {
+    const productId = Number((card as HTMLElement).dataset.productId);
+    const inCart = cart.find(item => item.productId === productId);
+    const cartQty = inCart ? inCart.qty : 0;
+    
+    const footer = card.querySelector('.product-footer > div');
+    if (footer) {
+      const existingBadge = footer.querySelector('.in-cart-badge');
+      if (existingBadge) {
+        existingBadge.remove();
+      }
+      
+      if (cartQty > 0) {
+        const badge = document.createElement('div');
+        badge.className = 'in-cart-badge';
+        badge.textContent = `🛒 ${cartQty} en carrito`;
+        footer.appendChild(badge);
+      }
+    }
+  });
+}
+
+// Estilos para el toast
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes slideIn {
+    from {
+      transform: translateX(400px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideOut {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(400px);
+      opacity: 0;
+    }
+  }
+`;
+document.head.appendChild(style);
 
 updateCartBadge();
 loadCategoriesAndProducts();
