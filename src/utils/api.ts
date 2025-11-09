@@ -1,3 +1,4 @@
+// src/utils/api.ts
 const BASE = 'http://localhost:8080/api';
 
 function getHeaders(): HeadersInit {

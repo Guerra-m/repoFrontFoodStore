@@ -1,3 +1,4 @@
+// cart.ts
 import { logout, requireAuth, getUser } from '@/utils/auth';
 import { getCart, updateQuantity, removeFromCart, clearCart, getCartTotal } from '@/utils/cart';
 import { POST, GET } from '@/utils/api';
@@ -39,10 +40,10 @@ async function renderCart() {
     const itemTotal = item.precio * item.qty;
     return `
       <div class="cart-item" data-id="${item.productId}">
-        ${item.imagen 
-          ? `<img src="${item.imagen}" alt="${item.nombre}" class="item-img">`
-          : `<div class="item-img" style="background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:2rem;">🍔</div>`
-        }
+        ${item.imagen
+        ? `<img src="${item.imagen}" alt="${item.nombre}" class="item-img">`
+        : `<div class="item-img" style="background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:2rem;">🍔</div>`
+      }
         <div class="item-info">
           <h3>${item.nombre}</h3>
           <div class="item-price">$${item.precio.toFixed(2)} c/u</div>
@@ -102,7 +103,7 @@ function attachEvents() {
     btn.addEventListener('click', async (e) => {
       e.preventDefault();
       e.stopPropagation();
-      
+
       const target = e.target as HTMLButtonElement;
       const action = target.dataset.action;
       const productId = Number(target.dataset.id);
@@ -115,12 +116,12 @@ function attachEvents() {
         try {
           // Validar stock disponible
           const productInDb: any = await GET(`/productos/${productId}`);
-          
+
           if (item.qty >= productInDb.stock) {
             alert(`Stock máximo alcanzado para ${item.nombre}. Disponible: ${productInDb.stock}`);
             return;
           }
-          
+
           updateQuantity(productId, item.qty + 1);
           renderCart();
         } catch (error) {
@@ -146,7 +147,7 @@ function attachEvents() {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
-      
+
       const productId = Number((e.target as HTMLButtonElement).dataset.id);
       if (confirm('¿Eliminar este producto del carrito?')) {
         removeFromCart(productId);
@@ -198,34 +199,35 @@ function attachEvents() {
       button.textContent = 'Procesando...';
 
       try {
-        const pedidoDTO: CreatePedidoDTO = {
+        const pedidoDTO = {
           usuarioId: currentUser.id,
           total: total,
-          items: cart.map(item => ({
+          detalles: cart.map(item => ({
             productoId: item.productId,
             productoNombre: item.nombre,
-            precio: item.precio,
+            precioUnitario: item.precio,
             cantidad: item.qty,
             subtotal: item.precio * item.qty
           }))
         };
 
+
         console.log('DTO a enviar:', pedidoDTO);
 
         const response = await POST('/pedidos', pedidoDTO);
-        
+
         console.log('Respuesta del servidor:', response);
-        
+
         alert('¡Pedido realizado con éxito! Puedes ver tus pedidos en "Mis Pedidos"');
         clearCart();
         window.location.href = '/src/pages/client/orders/orders.html';
       } catch (error: any) {
         console.error('=== ERROR AL CREAR PEDIDO ===');
         console.error('Error completo:', error);
-        
+
         button.disabled = false;
         button.textContent = 'Realizar Pedido';
-        
+
         alert('Error al realizar el pedido: ' + (error.message || 'Intenta nuevamente'));
       }
     }
