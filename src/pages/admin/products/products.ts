@@ -1,5 +1,6 @@
 import { GET, POST, PUT, DEL } from '@/utils/api';
 import { logout, requireAdmin, getUser } from '@/utils/auth';
+import { customConfirm } from '@/utils/customConfirm';
 import type { IProduct } from '@/types/IProduct';
 import type { ICategoria } from '@/types/ICategoria';
 
@@ -71,7 +72,7 @@ async function cargarCategorias(selectedId?: number) {
     console.error('Error al cargar categorías:', e);
   }
 }
-
+/*
 function agregarEventos() {
   // Botones de editar
   document.querySelectorAll('.btn-editar').forEach(btn => {
@@ -110,7 +111,29 @@ function agregarEventos() {
       if (confirm(`¿Estás seguro de eliminar el producto "${nombre}"?`)) {
         try {
           await DEL(`/productos/${id}`);
-          alert('Producto eliminado exitosamente');
+          //alert('Producto eliminado exitosamente');
+
+          const message = document.createElement('div');
+                message.className = 'toast-message';
+                message.textContent = `✅ Producto eliminado correctamente!!`;
+                message.style.cssText = `
+                  position: fixed;
+                  top: 100px;
+                  right: 20px;
+                  background: #00b894; 
+                  color: white;
+                  padding: 1rem 2rem;
+                  border-radius: 8px;
+                  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                  z-index: 10000;
+                  animation: slideIn 0.3s ease;
+                `;
+                document.body.appendChild(message);
+                setTimeout(() => {
+                  message.style.animation = 'slideOut 0.3s ease';
+                  setTimeout(() => message.remove(), 300);
+                }, 2000);
+
           await load();
         } catch (error) {
           console.error('Error al eliminar:', error);
@@ -119,7 +142,7 @@ function agregarEventos() {
       }
     });
   });
-}
+}*/
 
 async function abrirModalNuevo() {
   form.reset();
@@ -180,14 +203,130 @@ form.addEventListener('submit', async (e) => {
       alert('Producto creado exitosamente');
     } else {
       await PUT(`/productos/${editandoId}`, payload);
-      alert('Producto actualizado exitosamente');
+      //alert('Producto actualizado exitosamente');
+         const message = document.createElement('div');
+      message.className = 'toast-message';
+      message.textContent = `✅ Stock de ${nombre} actualizado correctamente!`;
+      message.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: #00b894; 
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        z-index: 10000;
+        animation: slideIn 0.3s ease;
+      `;
+      document.body.appendChild(message);
+      setTimeout(() => {
+        message.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => message.remove(), 300);
+      }, 2000);
+
+
     }
     modal.classList.add('oculto');
     await load();
   } catch (e) {
     console.error('Error:', e);
-    alert('Error al guardar producto');
+    //alert('Error al guardar producto');
+       const message = document.createElement('div');
+      message.className = 'toast-message';
+      message.textContent = `❌ Error al guardar producto!!`;
+      message.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: #9e0505ff;
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        z-index: 10000;
+        animation: slideIn 0.3s ease;
+      `;
+      document.body.appendChild(message);
+      setTimeout(() => {
+        message.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => message.remove(), 300);
+      }, 2000);
   }
 });
+
+
+function agregarEventos() {
+  // Botones de editar
+  document.querySelectorAll('.btn-editar').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const id = Number((e.target as HTMLElement).dataset.id);
+      try {
+        const prod = await GET<IProduct>(`/productos/${id}`);
+        abrirModalEditar(prod);
+      } catch (error) {
+        console.error('Error al obtener producto:', error);
+        alert('Error al cargar el producto');
+      }
+    });
+  });
+
+  // Botones de eliminar
+  document.querySelectorAll('.btn-eliminar').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const btnElement = e.target as HTMLElement;
+      const tr = btnElement.closest('tr');
+      if (!tr) return;
+      
+      const nombre = tr.children[2]?.textContent || '';
+      const id = Number(tr.dataset.id);
+      
+      if (!id) {
+        alert('ID de producto no válido');
+        return;
+      }
+      
+      // ✨ AQUÍ USAMOS EL MODAL PERSONALIZADO
+      const confirmed = await customConfirm('¿Estás seguro de eliminar el producto', nombre);
+      
+      if (confirmed) {
+        try {
+          await DEL(`/productos/${id}`);
+
+          const message = document.createElement('div');
+          message.className = 'toast-message';
+          message.textContent = `✅ Producto eliminado correctamente!!`;
+          message.style.cssText = `
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: #00b894; 
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+          `;
+          document.body.appendChild(message);
+          setTimeout(() => {
+            message.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => message.remove(), 300);
+          }, 2000);
+
+          await load();
+        } catch (error) {
+          console.error('Error al eliminar:', error);
+          alert('Error al eliminar el producto');
+        }
+      }
+    });
+  });
+}
 
 load();
