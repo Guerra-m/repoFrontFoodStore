@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito - Food Store</title>
+  <link rel="stylesheet" href="/src/pages/admin/adminHome/admin.css">
+  <link rel="stylesheet" href="cart.css">
+</head>
+<body>
+
+  <!-- 🔹 NAVBAR -->
+  <header class="topbar">
+    <div class="logo" onclick="window.location.href='/src/pages/store/home/home.html'" style="cursor: pointer;">
+      🍕 Food Store
+    </div>
+    <nav class="topnav">
+      <a href="/src/pages/store/home/home.html">Inicio</a>
+      <a href="/src/pages/client/orders/orders.html" class="active">Mis Pedidos</a>
+      <a href="/src/pages/store/cart/cart.html" class="cart-link">
+        🛒 Carrito
+        <span id="cartBadge">0</span>
+      </a>
+      <span class="user" id="userName">Cliente</span>
+      <button id="logout-btn" class="logout-btn">Cerrar Sesión</button>
+    </nav>
+  </header>
+
+  <!-- 🔹 CONTENIDO DEL CARRITO -->
+  <div class="cart-container">
+    <div class="cart-header">
+      <h1>🛒 Mi Carrito de Compras</h1>
+    </div>
+
+    <div id="cartContent">
+      <!-- Se carga dinámicamente con cart.ts -->
+    </div>
+  </div>
+    <footer class="footer">
+    <p>🍕 Food Store © 2025 - Todos los derechos reservados</p>
+  </footer>
+
+  <script type="module" src="/src/pages/store/cart/cart.ts"></script>
+</body>
+</html>

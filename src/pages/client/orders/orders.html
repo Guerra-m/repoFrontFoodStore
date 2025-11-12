@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis Pedidos | Food Store</title>
+  <link rel="stylesheet" href="/src/pages/store/home/home.css">
+  <link rel="stylesheet" href="orders.css">
+</head>
+<body>
+
+  <!-- 🔹 NAVBAR -->
+  <header class="topbar">
+    <div class="logo" onclick="window.location.href='/src/pages/store/home/home.html'" style="cursor: pointer;">
+      🍕 Food Store
+    </div>
+    <nav class="topnav">
+      <a href="/src/pages/store/home/home.html">Inicio</a>
+      <a href="/src/pages/client/orders/orders.html" class="active">Mis Pedidos</a>
+      <a href="/src/pages/store/cart/cart.html" class="cart-link">
+        🛒 Carrito
+        <span id="cartBadge">0</span>
+      </a>
+      <span class="user" id="userName">Cliente</span>
+      <button id="logout-btn" class="logout-btn">Cerrar Sesión</button>
+    </nav>
+  </header>
+
+  <!-- 🔹 CONTENEDOR PRINCIPAL -->
+  <main class="orders-container">
+    <div class="orders-header">
+      <h1>📦 Mis Pedidos</h1>
+      <p class="subtitle">Revisa el historial de tus compras</p>
+    </div>
+
+    <div id="ordersContent">
+      <!-- Se carga dinámicamente con orders.ts -->
+    </div>
+  </main>
+    <footer class="footer">
+    <p>🍕 Food Store © 2025 - Todos los derechos reservados</p>
+  </footer>
+
+  <script type="module" src="/src/pages/client/orders/orders.ts"></script>
+</body>
+</html>

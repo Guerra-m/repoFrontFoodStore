@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Pedidos | Food Store</title>
+  <link rel="stylesheet" href="/src/pages/admin/adminHome/admin.css">
+  <link rel="stylesheet" href="orders.css">
+</head>
+<body>
+ <header class="topbar">
+  <div class="logo" onclick="window.location.href='/src/pages/store/home/home.html'" style="cursor: pointer;">
+    🍕 Food Store
+  </div>
+  <nav class="topnav">
+    <a href="/src/pages/store/home/home.html">🛍️ Tienda</a>
+    <a href="/src/pages/admin/adminHome/adminHome.html">⚙️ Panel Admin</a>
+    <span class="user" id="userName">Admin</span>
+    <button id="logout-btn" class="logout-btn">Cerrar Sesión</button>
+  </nav>
+</header>
+
+  <div class="admin-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h3>Administración</h3>
+      <ul class="menu">
+        <li><a href="/src/pages/admin/adminHome/adminHome.html">📊 Dashboard</a></li>
+        <li><a href="/src/pages/admin/categories/categories.html">📁 Categorías</a></li>
+        <li><a href="/src/pages/admin/products/products.html">🍔 Productos</a></li>
+        <li class="active"><a href="/src/pages/admin/orders/orders.html">📦 Pedidos</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main  -->
+    <main class="main-content">
+      <div class="header-table">
+        <h2>📦 Gestión de Pedidos</h2>
+        <div class="filter-buttons">
+          <button class="filter-btn active" data-status="TODOS">Todos</button>
+          <button class="filter-btn" data-status="PENDIENTE">⏳ Pendientes</button>
+          <button class="filter-btn" data-status="APROBADO">✅ Aprobados</button>
+          <button class="filter-btn" data-status="RECHAZADO">❌ Rechazados</button>
+          <button class="filter-btn" data-status="ENTREGADO">🚚 Entregados</button>
+        </div>
+      </div>
+
+      <div id="ordersContent">
+        <!-- Se carga dinámicamente -->
+      </div>
+    </main>
+  </div>
+    <footer class="footer">
+    <p>🍕 Food Store © 2025 - Todos los derechos reservados</p>
+  </footer>
+
+  <script type="module" src="/src/pages/admin/orders/orders.ts"></script>
+</body>
+</html>

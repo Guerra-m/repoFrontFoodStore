@@ -2,16 +2,43 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Home Cliente</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Store - Tienda</title>
+  <link rel="stylesheet" href="/src/pages/admin/adminHome/admin.css">
+  <link rel="stylesheet" href="home.css">
 </head>
 <body>
-  <h1>Bienvenido cliente</h1>
-  <button id="btnLogout">Logout</button>
+<!-- 🔹 NAVBAR -->
+  <header class="topbar">
+    <div class="logo" onclick="window.location.href='/src/pages/store/home/home.html'" style="cursor: pointer;">
+      🍕 Food Store
+    </div>
+    <nav class="topnav">
+      <a href="/src/pages/store/home/home.html">Inicio</a>
+      <a href="/src/pages/client/orders/orders.html" class="active">Mis Pedidos</a>
+      <a href="/src/pages/store/cart/cart.html" class="cart-link">
+        🛒 Carrito
+        <span id="cartBadge">0</span>
+      </a>
+      <span class="user" id="userName">Cliente</span>
+      <button id="logout-btn" class="logout-btn">Cerrar Sesión</button>
+    </nav>
+  </header>
 
-  <script type="module">
-    import { logout, requireRole } from '../../../utils/auth.js';
-    requireRole('cliente');
-    document.getElementById('btnLogout')?.addEventListener('click', () => logout());
-  </script>
+  <div class="store-container">
+    <div class="welcome-section">
+      <h1>Bienvenido a Food Store</h1>
+      <p>¡Hola Cliente! Explora nuestros productos</p>
+    </div>
+
+    <div id="categoriesContainer" class="categories-container">
+      <!-- Se cargan dinámicamente -->
+    </div>
+  </div>
+    <footer class="footer">
+    <p>🍕 Food Store © 2025 - Todos los derechos reservados</p>
+  </footer>
+
+  <script type="module" src="/src/pages/store/home/home.ts"></script>
 </body>
 </html>

@@ -1,40 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <title>Login - SuperFood</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Iniciar Sesión • SuperFood</title>
+  <link rel="stylesheet" href="login.css">
 </head>
 <body>
-  <div class="login-container" >
+  <div class="login-container">
     <h1>SuperFood</h1>
-    <h2>Iniciar Secion</h2>
+    <h2>Iniciar Sesión</h2>
     <form id="loginForm">
       <div class="form-group">
         <label for="email">Email</label>
         <input type="email" id="email" placeholder="ejemplo@gmail.com" required>
       </div>
-    
       <div class="form-group">
         <label for="password">Contraseña</label>
         <input type="password" id="password" placeholder="Ingresá tu contraseña" required>
       </div>
-    
-      <button type="submit">Ingresar</button>
+      <button type="submit" class="btn-submit">Ingresar</button>
     </form>
-  
     <p class="register-link">
       ¿No tenés cuenta? <a href="/src/pages/auth/register/register.html">Registrate</a>
     </p>
-
-    <p>
-      Cuentas de prueba:<br>
-      Admin: admin@food.com / admin123<br>
-      cliente: cliente@food.com / cliente123
-    </p>
+    <div class="test-accounts">
+      <p><strong>Cuentas de prueba:</strong></p>
+      <p>Admin: admin@food.com / admin123</p>
+      <p>Cliente: cliente@food.com / cliente123</p>
+    </div>
   </div>
-  <script type="module" src="/src/pages/auth/login/login.ts"></script>
-
+  <script type="module" src="login.ts"></script>
 </body>
 </html>

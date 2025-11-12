@@ -15,7 +15,7 @@
     font-family: "Poppins", sans-serif;
 }
 
-/* === HEADER SUPERIOR === */
+/* HEADER SUPERIOR  */
 .topbar {
     background: white;
     border-bottom: 1px solid var(--gray);
@@ -40,7 +40,6 @@
 
 .topnav .user {
     margin-right: 1.2rem;
-    color: var(--dark);
     font-weight: 600;
 }
 
@@ -57,13 +56,13 @@
     background: #b2bec3;
 }
 
-/* === CONTENEDOR GENERAL === */
+/* CONTENEDOR GENERAL */
 .admin-container {
     display: flex;
     height: calc(100vh - 60px);
 }
 
-/* === SIDEBAR === */
+/*  SIDEBAR */
 .sidebar {
     width: 230px;
     background: var(--light);
@@ -99,7 +98,7 @@
     color: white;
 }
 
-/* === CONTENIDO PRINCIPAL === */
+/*  CONTENIDO PRINCIPAL */
 .main-content {
     flex: 1;
     background: #f9fafc;
@@ -111,7 +110,7 @@
     color: var(--dark);
 }
 
-/* === TARJETAS === */
+/* TARJETAS */
 .cards-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -183,7 +182,7 @@
     opacity: 0.9;
 }
 
-/* === RESUMEN === */
+/* RESUMEN */
 .summary {
     background: white;
     padding: 1rem;
@@ -194,4 +193,34 @@
 .summary h3 {
     color: var(--danger);
     margin-bottom: 0.5rem;
+}
+/* ======== FOOTER ======== */
+.footer {
+  background: white;
+  border-top: 1px solid var(--gray);
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.95rem;
+  color: var(--dark);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+.footer p {
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 768px) {
+  .footer {
+    font-size: 0.85rem;
+    padding: 0.8rem;
+  }
+}
+.user{
+    color:white;
 }
