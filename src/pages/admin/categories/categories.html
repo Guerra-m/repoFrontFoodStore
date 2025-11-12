@@ -1,109 +1,129 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gestión de Categorías | Food Store</title>
-  <link rel="stylesheet" href="/src/pages/admin/adminHome/admin.css">
-  <link rel="stylesheet" href="categorias.css">
-</head>
-<body>
- <header class="topbar">
-  <div class="logo" onclick="window.location.href='/src/pages/store/home/home.html'" style="cursor: pointer;">
-    🍕 Food Store
-  </div>
-  <nav class="topnav">
-    <!-- <a href="/src/pages/store/home/home.html">🛍️ Tienda</a> -->
-    <a href="/src/pages/admin/adminHome/adminHome.html">⚙️ Panel Admin</a>
-    <span class="user" id="userName">Admin</span>
-    <button id="logout-btn" class="logout-btn">Cerrar Sesión</button>
-  </nav>
-</header>
-
-  <div class="admin-container">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <h3>Administración</h3>
-      <ul class="menu">
-        <li><a href="/src/pages/admin/adminHome/adminHome.html">📊 Dashboard</a></li>
-        <li class="active"><a href="/src/pages/admin/categories/categories.html">📁 Categorías</a></li>
-        <li><a href="/src/pages/admin/products/products.html">🍔 Productos</a></li>
-        <li><a href="/src/pages/admin/orders/orders.html">📦 Pedidos</a></li>
-      </ul>
-    </aside>
-
-    <!-- Main -->
-    <main class="main-content">
-      <div class="header-table">
-        <h2>Gestión de Categorías</h2>
-        <button id="btnNueva" class="btn-nueva">+ Nueva Categoría</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestión de Categorías | Food Store</title>
+    <link rel="stylesheet" href="/src/pages/admin/adminHome/admin.css" />
+    <link rel="stylesheet" href="categorias.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div
+        class="logo"
+        onclick="window.location.href='/src/pages/store/home/home.html'"
+        style="cursor: pointer"
+      >
+        🍕 Food Store
       </div>
+      <nav class="topnav">
+        <!-- <a href="/src/pages/store/home/home.html">🛍️ Tienda</a> -->
+        <a href="/src/pages/admin/adminHome/adminHome.html">⚙️ Panel Admin</a>
+        <span class="user" id="userName">Admin</span>
+        <button id="logout-btn" class="logout-btn">Cerrar Sesión</button>
+      </nav>
+    </header>
 
-      <div class="tabla-container">
-        <table id="tablaCategorias">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Imagen</th>
-              <th>Nombre</th>
-              <th>Descripción</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </main>
-  </div>
+    <div class="admin-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <h3>Administración</h3>
+        <ul class="menu">
+          <li>
+            <a href="/src/pages/admin/adminHome/adminHome.html">📊 Dashboard</a>
+          </li>
+          <li class="active">
+            <a href="/src/pages/admin/categories/categories.html"
+              >📁 Categorías</a
+            >
+          </li>
+          <li>
+            <a href="/src/pages/admin/products/products.html">🍔 Productos</a>
+          </li>
+          <li><a href="/src/pages/admin/orders/orders.html">📦 Pedidos</a></li>
+        </ul>
+      </aside>
 
-  <!-- Modal Nueva Categoría -->
-  <div id="modalCategoria" class="modal oculto">
-    <div class="modal-content">
-      <h3 id="tituloModal">Nueva Categoría</h3>
-      <form id="formCategoria">
-        <label>Nombre:</label>
-        <input type="text" id="nombre" required>
-
-        <label>Descripción:</label>
-        <input type="text" id="descripcion" required>
-
-        <label>Imagen (URL):</label>
-        <input type="text" id="imagen" placeholder="https://..." required>
-
-        <div class="modal-buttons">
-          <button type="submit" class="btn-guardar">Guardar</button>
-          <button type="button" id="btnCancelar" class="btn-cancelar">Cancelar</button>
+      <!-- Main -->
+      <main class="main-content">
+        <div class="header-table">
+          <h2>Gestión de Categorías</h2>
+          <button id="btnNueva" class="btn-nueva">+ Nueva Categoría</button>
         </div>
-      </form>
-    </div>
-  </div>
 
-  <!-- Modal Editar Categoría -->
-  <div id="modalEditarCategoria" class="modal oculto">
-    <div class="modal-content editar">
-      <div class="modal-header">
-        <h3>Editar Categoría</h3>
-        <button id="cerrarEditar" class="cerrar-modal">✕</button>
+        <div class="tabla-container">
+          <table id="tablaCategorias">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Imagen</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+
+    <!-- Modal Nueva Categoría -->
+    <div id="modalCategoria" class="modal oculto">
+      <div class="modal-content">
+        <h3 id="tituloModal">Nueva Categoría</h3>
+        <form id="formCategoria">
+          <label>Nombre:</label>
+          <input type="text" id="nombre" required />
+
+          <label>Descripción:</label>
+          <input type="text" id="descripcion" required />
+
+          <label>Imagen (URL):</label>
+          <input type="text" id="imagen" placeholder="https://..." required />
+
+          <div class="modal-buttons">
+            <button type="submit" class="btn-guardar">Guardar</button>
+            <button type="button" id="btnCancelar" class="btn-cancelar">
+              Cancelar
+            </button>
+          </div>
+        </form>
       </div>
-
-      <form id="formEditarCategoria">
-        <label for="editarNombre">Nombre</label>
-        <input type="text" id="editarNombre" required>
-
-        <label for="editarDescripcion">Descripción</label>
-        <textarea id="editarDescripcion" rows="3" required></textarea>
-
-        <label for="editarImagen">URL de Imagen</label>
-        <input type="text" id="editarImagen" placeholder="https://..." required>
-
-        <button type="submit" class="btn-guardar-naranja">Guardar</button>
-      </form>
     </div>
-  </div>
-    <footer class="footer">
-    <p>🍕 Food Store © 2025 - Todos los derechos reservados</p>
-  </footer>
+    <br /><br />
 
-  <script type="module" src="categories.ts"></script>
-</body>
+    <!-- Modal Editar Categoría -->
+    <div id="modalEditarCategoria" class="modal oculto">
+      <div class="modal-content editar">
+        <div class="modal-header">
+          <h3>Editar Categoría</h3>
+          <button id="cerrarEditar" class="cerrar-modal">✕</button>
+        </div>
+
+        <form id="formEditarCategoria">
+          <label for="editarNombre">Nombre</label>
+          <input type="text" id="editarNombre" required />
+
+          <label for="editarDescripcion">Descripción</label>
+          <textarea id="editarDescripcion" rows="3" required></textarea>
+
+          <label for="editarImagen">URL de Imagen</label>
+          <input
+            type="text"
+            id="editarImagen"
+            placeholder="https://..."
+            required
+          />
+
+          <button type="submit" class="btn-guardar-naranja">Guardar</button>
+        </form>
+      </div>
+    </div>
+    <footer class="footer">
+      <p>🍕 Food Store © 2025 - Todos los derechos reservados</p>
+    </footer>
+
+    <script type="module" src="categories.ts"></script>
+  </body>
 </html>

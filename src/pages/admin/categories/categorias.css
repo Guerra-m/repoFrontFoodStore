@@ -1,231 +1,241 @@
 .header-table {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 
 .btn-nueva {
-    background: var(--success);
-    color: white;
-    border: none;
-    padding: 0.6rem 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: 0.2s;
+  background: var(--success);
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
 }
 
 .btn-nueva:hover {
-    background: #00a383;
+  background: #00a383;
 }
 
+/* coontenedor principal para que la tabla pueda crecer */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding-bottom: 40p;
+}
+
+/*tabla de categoriass*/
 .tabla-container {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+  flex: 1;
+  overflow-y: auto;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 thead {
-    background: var(--primary);
-    color: white;
+  background: var(--primary);
+  color: white;
 }
 
 th,
 td {
-    padding: 0.8rem 1rem;
-    text-align: left;
-    border-bottom: 1px solid #eee;
+  padding: 0.8rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
 }
 
 td img {
-    width: 50px;
-    height: 50px;
-    border-radius: 8px;
-    object-fit: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  object-fit: cover;
 }
 
 .btn-editar {
-    background: #b2bec3;
-    border: none;
-    color: white;
-    padding: 0.4rem 0.8rem;
-    border-radius: 6px;
-    cursor: pointer;
+  background: #b2bec3;
+  border: none;
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
 .btn-eliminar {
-    background: var(--danger);
-    border: none;
-    color: white;
-    padding: 0.4rem 0.8rem;
-    border-radius: 6px;
-    cursor: pointer;
+  background: var(--danger);
+  border: none;
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
 /* MODAL  */
 .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
 .modal.oculto {
-    display: none ;
+  display: none;
 }
 
 .modal:not(.oculto) {
-    display: flex !important;
+  display: flex !important;
 }
 
 .modal-content {
-    background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    width: 400px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1001;
-    position: relative;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 400px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1001;
+  position: relative;
 }
 
 .modal-content h3 {
-    margin-bottom: 1rem;
-    color: var(--dark);
+  margin-bottom: 1rem;
+  color: var(--dark);
 }
 
 .modal-content label {
-    display: block;
-    font-weight: 600;
-    margin-top: 0.6rem;
+  display: block;
+  font-weight: 600;
+  margin-top: 0.6rem;
 }
 
 .modal-content input {
-    width: 100%;
-    padding: 0.5rem;
-    margin-top: 0.3rem;
-    border: 1px solid var(--gray);
-    border-radius: 6px;
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+  border: 1px solid var(--gray);
+  border-radius: 6px;
 }
 
 .modal-buttons {
-    margin-top: 1rem;
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
 }
 
 .btn-guardar {
-    background: var(--primary);
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    cursor: pointer;
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
 .btn-cancelar {
-    background: #b2bec3;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    cursor: pointer;
+  background: #b2bec3;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
 /* MODAL EDITAR */
 .modal.editar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .modal-content.editar {
-    background: white;
-    border-radius: 10px;
-    width: 400px;
-    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
-    animation: aparecer 0.2s ease-in;
+  background: white;
+  border-radius: 10px;
+  width: 400px;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  animation: aparecer 0.2s ease-in;
 }
 
 .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: var(--primary);
-    color: white;
-    padding: 0.8rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--primary);
+  color: white;
+  padding: 0.8rem 1rem;
 }
 
 .cerrar-modal {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.2rem;
-    cursor: pointer;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
 }
 
 .modal-content.editar form {
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .modal-content.editar label {
-    margin-top: 0.5rem;
-    font-weight: 600;
-    color: var(--dark);
+  margin-top: 0.5rem;
+  font-weight: 600;
+  color: var(--dark);
 }
 
 .modal-content.editar input,
 .modal-content.editar textarea {
-    width: 100%;
-    margin-top: 0.3rem;
-    padding: 0.5rem;
-    border: 1px solid var(--gray);
-    border-radius: 6px;
-    font-size: 0.95rem;
+  width: 100%;
+  margin-top: 0.3rem;
+  padding: 0.5rem;
+  border: 1px solid var(--gray);
+  border-radius: 6px;
+  font-size: 0.95rem;
 }
 
 .btn-guardar-naranja {
-    margin-top: 1.2rem;
-    background: var(--primary);
-    color: white;
-    border: none;
-    padding: 0.6rem 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background 0.2s;
+  margin-top: 1.2rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
 }
 
 .btn-guardar-naranja:hover {
-    background: #ff520f;
+  background: #ff520f;
 }
 
 @keyframes aparecer {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 /* ======== FOOTER ======== */
 .footer {
