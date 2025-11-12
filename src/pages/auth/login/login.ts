@@ -1,6 +1,7 @@
 import { saveUser, goToRoleHome } from "../../../utils/auth";
 
-const API_BASE = "http://localhost:8080/api/usuarios";
+//const API_BASE = "http://localhost:8080/api/usuarios";
+const API_BASE = import.meta.env.VITE_API_URL;
 //alerta usuario registrado
 document.addEventListener("DOMContentLoaded", () => {
   const mensaje = localStorage.getItem("registroExitoso");
@@ -53,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .value;
 
     try {
-      const response = await fetch(`${API_BASE}/login`, {
+      const response = await fetch(`${API_BASE}/usuarios/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

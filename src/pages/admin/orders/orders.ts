@@ -3,6 +3,7 @@ import { logout, requireAdmin, getUser } from "@/utils/auth";
 import type { IPedido } from "@/types/IOrders";
 import { customAlertGeneral } from "@/utils/customAlertGeneral";
 import { customConfirmGeneral } from "@/utils/customConfirmGeneral";
+const BASE = import.meta.env.VITE_API_URL;
 
 requireAdmin();
 
@@ -167,52 +168,37 @@ async function loadOrders() {
     RECHAZADO: "¿Rechazar este pedido?",
     ENTREGADO: "¿Marcar como entregado?",
   };
-  //////
-  async function updateOrderStatus(pedidoId: string, nuevoEstado: string) {
-    const mensaje = confirmMessages[nuevoEstado] || "¿Continuar?";
 
-    // Confirmación con modal personalizado
-    const confirmed = await customConfirmGeneral(mensaje, nuevoEstado);
+  const mensaje = confirmMessages[nuevoEstado] || "¿Continuar?";
 
-    if (!confirmed) return; // Si el usuario cancela, no hacemos nada
+  // Confirmación con modal personalizado
+  const confirmed = await customConfirmGeneral(mensaje, nuevoEstado);
+  if (!confirmed) return;
 
-    try {
-      // Petición para actualizar el estado (usando fetch)
-      const response = await fetch(
-        `http://localhost:8080/api/pedidos/${pedidoId}/estado`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ estado: nuevoEstado }),
-        }
-      );
+  try {
+    const response = await fetch(`${BASE}/pedidos/${pedidoId}/estado`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ estado: nuevoEstado }),
+    });
 
-      if (!response.ok) {
-        throw new Error("Error al actualizar estado");
-      }
+    if (!response.ok) throw new Error("Error al actualizar estado");
 
-      // Mostrar alerta de éxito
-      customAlertGeneral(
-        "Estado actualizado correctamente",
-        "¡Éxito!",
-        "success"
-      );
+    customAlertGeneral(
+      "Estado actualizado correctamente",
+      "¡Éxito!",
+      "success"
+    );
 
-      // Recargar pedidos
-      await loadOrders();
-    } catch (error) {
-      console.error("Error al actualizar estado:", error);
-
-      // Mostrar alerta de error
-      customAlertGeneral(
-        "Error al actualizar el estado del pedido",
-        "Error",
-        "error"
-      );
-    }
+    await loadOrders();
+  } catch (error) {
+    console.error("Error al actualizar estado:", error);
+    customAlertGeneral(
+      "Error al actualizar el estado del pedido",
+      "Error",
+      "error"
+    );
   }
-
-  await updateOrderStatus(pedidoId, nuevoEstado);
 };
 
 // Eventos de filtros
